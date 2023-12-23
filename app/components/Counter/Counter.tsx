@@ -2,13 +2,14 @@
 
 
 /* Instruments */
-import { useSelector, selectCount, decrement, increment, incrementByAmount, incrementIfOddAsync, ReduxThunkAction, ReduxDispatch } from "@/lib/redux";
+import { useSelector, selectCount, decrement, increment, incrementByAmount, incrementIfOddAsync } from "@/lib/redux";
 import styles from "./counter.module.css";
 import { useDispatch } from "react-redux";
 import { ChangeEvent, useState } from "react";
 
 export const Counter = () => {
   const count = useSelector(selectCount);
+  const status = useSelector(state => state.counter.status)
 
   const [amount, setAmount] = useState<string | number | string[]>('');
 
@@ -31,6 +32,9 @@ export const Counter = () => {
   }
 
   const submitAddAmount = () => {
+    if(amount == '') {
+      return;
+    }
     if (!Number.isNaN(amount)) {
       dispatch(incrementByAmount(+amount));
       setAmount('')
@@ -38,6 +42,9 @@ export const Counter = () => {
   }
 
   const handleAddIfOdd = () => {
+    if(amount == '') {
+      return;
+    }
     if (!Number.isNaN(amount)) {
       dispatch(incrementIfOddAsync(+amount));
       setAmount('');
@@ -75,6 +82,7 @@ export const Counter = () => {
         <button
           className={styles.button}
           onClick={handleAddIfOdd}
+          disabled={status === 'loading'}
         >
           Add If Odd
         </button>

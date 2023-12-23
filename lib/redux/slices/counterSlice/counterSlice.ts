@@ -1,6 +1,5 @@
 /* Core */
 import { createSlice } from "@reduxjs/toolkit";
-import { incrementIfOddAsync } from "../..";
 
 const initialState: CounterSliceState = {
   value: 0,
