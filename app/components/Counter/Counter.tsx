@@ -56,14 +56,16 @@ export const Counter = () => {
     <div>
       <div className={styles.row}>
         <button
+          data-testid="decrement-button"
           className={styles.button}
           aria-label="Decrement value"
           onClick={() => dispatch(decrement())}
         >
           -
         </button>
-        <span className={styles.value}>{count}</span>
+        <span data-testid="count" className={styles.value}>{count}</span>
         <button
+          data-testid="increment-button"
           className={styles.button}
           aria-label="Increment value"
           onClick={() => dispatch(increment())}
@@ -72,14 +74,16 @@ export const Counter = () => {
         </button>
       </div>
       <div className={styles.row}>
-        <input className={styles.textbox} value={amount} onKeyUp={handleOnInputAmount} onChange={handleAmountInput} aria-label="Set increment amount" />
+        <input className={styles.textbox} data-testid="amount-input" value={amount} onKeyUp={handleOnInputAmount} onChange={handleAmountInput} aria-label="Set increment amount" />
         <button
+          aria-label="Add Amount"
           className={styles.button}
           onClick={submitAddAmount}
         >
           Add Amount
         </button>
         <button
+          aria-label="Add If Odd"
           className={styles.button}
           onClick={handleAddIfOdd}
           disabled={status === 'loading'}
