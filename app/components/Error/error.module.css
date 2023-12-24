@@ -1,0 +1,37 @@
+.message {
+    opacity: 0;
+    font-size: 16px;
+    text-align: center;
+    font-family: system-ui, sans-serif;
+    animation: changeOpacity 2.5s normal forwards;
+}
+
+.errorStyle {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+@keyframes changeOpacity {
+    0% {
+        opacity: 0.25;
+    }
+
+    25% {
+        opacity: 0.50;
+    }
+
+    50% {
+        opacity: 0.75;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
