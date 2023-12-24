@@ -31,6 +31,10 @@
   justify-content: center;
 }
 
+.main > div {
+  width: 100%;
+}
+
 .footer {
   grid-area: footer;
   justify-self: center;
