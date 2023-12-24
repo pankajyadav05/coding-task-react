@@ -2,14 +2,17 @@
 
 
 /* Instruments */
-import { useSelector, selectCount, decrement, increment, incrementByAmount, incrementIfOddAsync } from "@/lib/redux";
+import { useSelector, selectCount, decrement, increment, incrementByAmount, incrementIfOddAsync, selectError, selectStatus, selectSuccess } from "@/lib/redux";
 import styles from "./counter.module.css";
 import { useDispatch } from "react-redux";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
+import Error from "../Error/Error"
 
 export const Counter = () => {
   const count = useSelector(selectCount);
-  const status = useSelector(state => state.counter.status)
+  const status = useSelector(selectStatus);
+  const error = useSelector(selectError);
+  const success = useSelector(selectSuccess)
 
   const [amount, setAmount] = useState<string | number | string[]>('');
 
@@ -31,7 +34,7 @@ export const Counter = () => {
     }
   }
 
-  const submitAddAmount = () => {
+  const submitAddAmount = useCallback(() => {
     if(amount == '') {
       return;
     }
@@ -39,9 +42,9 @@ export const Counter = () => {
       dispatch(incrementByAmount(+amount));
       setAmount('')
     }
-  }
+  }, [amount])
 
-  const handleAddIfOdd = () => {
+  const handleAddIfOdd = useCallback(() => {
     if(amount == '') {
       return;
     }
@@ -49,16 +52,18 @@ export const Counter = () => {
       dispatch(incrementIfOddAsync(+amount));
       setAmount('');
     }
-  }
+  }, [amount])
 
   // Create a state named incrementAmount
   return (
     <div>
+      <Error error={error} success={success} />
       <div className={styles.row}>
         <button
           data-testid="decrement-button"
           className={styles.button}
           aria-label="Decrement value"
+          disabled={status === "loading"}
           onClick={() => dispatch(decrement())}
         >
           -
@@ -68,6 +73,7 @@ export const Counter = () => {
           data-testid="increment-button"
           className={styles.button}
           aria-label="Increment value"
+          disabled={status === "loading"}
           onClick={() => dispatch(increment())}
         >
           +
@@ -79,6 +85,7 @@ export const Counter = () => {
           aria-label="Add Amount"
           className={styles.button}
           onClick={submitAddAmount}
+          disabled={status === 'loading'}
         >
           Add Amount
         </button>
@@ -86,7 +93,7 @@ export const Counter = () => {
           aria-label="Add If Odd"
           className={styles.button}
           onClick={handleAddIfOdd}
-          disabled={status === 'loading'}
+          disabled={status === 'loading' || (error && error.hasError)}
         >
           Add If Odd
         </button>
