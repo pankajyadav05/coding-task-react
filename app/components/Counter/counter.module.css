@@ -1,5 +1,6 @@
 .row {
   display: flex;
+  padding: 0 25px;
   align-items: center;
   justify-content: center;
 }
@@ -18,31 +19,32 @@
   padding-left: 16px;
   padding-right: 16px;
   margin-top: 2px;
+  word-break: break-all;
   font-family: 'Courier New', Courier, monospace;
 }
 
 .button {
   appearance: none;
-  background: none;
-  font-size: 32px;
+  font-size: 22px;
   padding-left: 12px;
   padding-right: 12px;
   outline: none;
   border: 2px solid transparent;
   color: rgb(112, 76, 182);
-  padding-bottom: 4px;
   cursor: pointer;
   background-color: rgba(112, 76, 182, 0.1);
-  border-radius: 2px;
+  border-radius: 4px;
+  min-width: 46px;
+  min-height: 46px;
   transition: all 0.15s;
 }
 
-.textbox {
+.textBox {
   font-size: 32px;
   padding: 2px;
-  width: 64px;
+  width: 150px;
   text-align: center;
-  margin-right: 4px;
+  margin-right: 8px;
 }
 
 .button:hover,
@@ -52,6 +54,10 @@
 
 .button:active {
   background-color: rgba(112, 76, 182, 0.2);
+}
+
+.button:disabled {
+  background-color: rgba(112, 76, 182, 0.1);
 }
 
 .asyncButton {
@@ -69,11 +75,44 @@
   left: 0;
   top: 0;
   opacity: 0;
-  transition: width 1s linear, opacity 0.5s ease 1s;
+  transition: width .4s linear, opacity 0.5s ease .5s;
 }
 
 .asyncButton:active:after {
-  width: 0%;
+  width: 0;
   opacity: 1;
   transition: 0s;
+}
+
+.button:disabled, .asyncButton:disabled {
+  opacity: 0.8;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 8px;
+}
+
+@media only screen and (max-width: 600px) {
+  .mobileRow {
+    flex-direction: column;
+  }
+  .value {
+    font-size: 28px;
+    margin: 10px 0;
+  }
+  .textBox {
+    width: 100%;
+    font-size: 28px;
+    margin-right: 0;
+  }
+  .buttonsContainer {
+    width: 100%;
+    margin-top: 12px;
+  }
+  .buttonsContainer > .button {
+    width: 100%;
+  }
 }
