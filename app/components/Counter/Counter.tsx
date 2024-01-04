@@ -19,7 +19,7 @@ export const Counter = () => {
           className={styles.button}
           aria-label="Decrement value"
           onClick={() => {
-            // dispatch event to decrease count by 1
+            // dispatch event to decrease count by 1.
           }}
         >
           -
