@@ -1,3 +1,7 @@
+.container {
+  height: 250px;
+}
+
 .row {
   display: flex;
   align-items: center;
@@ -76,4 +80,8 @@
   width: 0%;
   opacity: 1;
   transition: 0s;
+}
+
+.notificationText {
+  color: red;
 }
