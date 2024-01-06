@@ -39,6 +39,7 @@
   background-color: rgba(112, 76, 182, 0.1);
   border-radius: 2px;
   transition: all 0.15s;
+  margin: 0 10px;
 }
 
 .textbox {
@@ -47,11 +48,24 @@
   width: 64px;
   text-align: center;
   margin-right: 4px;
+  border: none;
+}
+
+.btnWrapper {
+  display: flex;
+}
+
+.button, .textbox {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 .button:hover,
 .button:focus {
-  border: 2px solid rgba(112, 76, 182, 0.4);
+  border: 1px solid rgba(134, 125, 151, 0.4);
+}
+
+.button:hover {
+  background-color: rgba(129, 77, 234, 0.2)
 }
 
 .button:active {
@@ -84,4 +98,25 @@
 
 .notificationText {
   color: red;
+}
+
+
+@media only screen and (max-width: 720px) {
+  .adaptiveRow {
+    flex-direction: column;
+  }
+  
+  .value {
+    font-size: 28px;
+    margin: 10px 0;
+  }
+
+  .btnWrapper {
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .button {
+    margin: 12px;
+  }
 }

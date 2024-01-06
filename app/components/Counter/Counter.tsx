@@ -54,13 +54,14 @@ export const Counter = () => {
           +
         </button>
       </div>
-      <div className={styles.row}>
+      <div className={`${styles.row} ${styles.adaptiveRow}`} >
         <input
           className={styles.textbox}
           aria-label="Set increment amount"
           value={incrementAmount}
           onChange={(e) => setIncrementAmount(Number(e.target.value))}
         />
+        <div className={styles.btnWrapper}>
         <button
           className={styles.button}
           onClick={() => {
@@ -74,6 +75,7 @@ export const Counter = () => {
             dispatch(incrementByAmount(incrementAmount));
             // Clear the message when normal add
             setNotificationMessage('');
+            setIncrementAmount(0);
           }}
         >
           {ADD_AMOUNT}
@@ -86,6 +88,7 @@ export const Counter = () => {
               dispatch(incrementIfOddAsync(incrementAmount));
               // Clear the message when successfully adding if odd
               setNotificationMessage('');
+              setIncrementAmount(0);
             } else {
               handleNotification(incrementAmount === 0 ? INCREMENT_AMOUNT_ERROR_MESSAGE : ADD_IF_ODD_ERROR_MESSAGE);
             }
@@ -93,6 +96,8 @@ export const Counter = () => {
         >
           {ADD_IF_ODD}
         </button>
+        </div>
+        
       </div>
       {notificationMessage && <p className={`${styles.row} ${styles.notificationText}`}>{notificationMessage}</p>}
     </div>
