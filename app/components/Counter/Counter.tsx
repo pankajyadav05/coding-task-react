@@ -22,7 +22,7 @@ export const Counter = () => {
     setNotificationMessage(message);
     setTimeout(() => {
       setNotificationMessage('');
-    }, 5000);
+    }, 10000);
   };
 
   return (
@@ -40,7 +40,7 @@ export const Counter = () => {
         >
           -
         </button>
-        <span className={styles.value}>{count}</span>
+        <span aria-label='count' className={styles.value}>{count}</span>
         <button
           className={styles.button}
           aria-label="Increment value"
