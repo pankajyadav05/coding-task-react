@@ -1,55 +1,99 @@
 "use client";
 
-/* Core */
-import { useState } from "react";
 
 /* Instruments */
-import { useSelector, selectCount } from "@/lib/redux";
+import { useSelector, selectCount, decrement, increment, incrementByAmount, incrementIfOddAsync, selectError, selectStatus, selectSuccess } from "@/lib/redux";
 import styles from "./counter.module.css";
+import { useDispatch } from "react-redux";
+import { ChangeEvent, useCallback, useState } from "react";
+import Error from "../Error/Error"
 
 export const Counter = () => {
   const count = useSelector(selectCount);
+  const status = useSelector(selectStatus);
+  const error = useSelector(selectError);
+  const success = useSelector(selectSuccess)
+
+  const [amount, setAmount] = useState<string | number | string[]>('');
+
+  const dispatch = useDispatch<any>();
+
+  const handleOnInputAmount = (event: any) => {
+    if (event.code === 'Enter') {
+      handleAmountInput(event)
+      submitAddAmount()
+    }
+  }
+
+  const handleAmountInput = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target as HTMLInputElement;
+    if (!isNaN(+value)) {
+      setAmount(+value)
+    } else {
+      setAmount('')
+    }
+  }
+
+  const submitAddAmount = useCallback(() => {
+    if(amount == '') {
+      return;
+    }
+    if (!Number.isNaN(amount)) {
+      dispatch(incrementByAmount(+amount));
+      setAmount('')
+    }
+  }, [amount])
+
+  const handleAddIfOdd = useCallback(() => {
+    if(amount == '') {
+      return;
+    }
+    if (!Number.isNaN(amount)) {
+      dispatch(incrementIfOddAsync(+amount));
+      setAmount('');
+    }
+  }, [amount])
 
   // Create a state named incrementAmount
-
   return (
     <div>
+      <Error error={error} success={success} />
       <div className={styles.row}>
         <button
+          data-testid="decrement-button"
           className={styles.button}
           aria-label="Decrement value"
-          onClick={() => {
-            // dispatch event to decrease count by 1
-          }}
+          disabled={status === "loading"}
+          onClick={() => dispatch(decrement())}
         >
           -
         </button>
-        <span className={styles.value}>{count}</span>
+        <span data-testid="count" className={styles.value}>{count}</span>
         <button
+          data-testid="increment-button"
           className={styles.button}
           aria-label="Increment value"
-          onClick={() => {
-            // dispatch event to increment count by 1
-          }}
+          disabled={status === "loading"}
+          onClick={() => dispatch(increment())}
         >
           +
         </button>
       </div>
       <div className={styles.row}>
-        <input className={styles.textbox} aria-label="Set increment amount" />
+        <input className={styles.textbox} data-testid="amount-input" value={amount} onKeyUp={handleOnInputAmount} onChange={handleAmountInput} aria-label="Set increment amount" />
         <button
+          aria-label="Add Amount"
           className={styles.button}
-          onClick={() => {
-            // dispatch event to add incrementAmount to count
-          }}
+          onClick={submitAddAmount}
+          disabled={status === 'loading'}
         >
           Add Amount
         </button>
         <button
+          aria-label="Add If Odd"
           className={styles.button}
-          onClick={() => {
-            // dispatch event to add incrementAmount only if count is odd
-          }}
+          onClick={handleAddIfOdd}
+          disabled={status === 'loading' || (error && error.hasError)}
         >
           Add If Odd
         </button>
