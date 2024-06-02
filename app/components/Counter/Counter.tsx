@@ -1,17 +1,20 @@
 "use client";
 
 /* Core */
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 /* Instruments */
-import { useSelector, selectCount } from "@/lib/redux";
+import { useSelector, selectCount, increment, decreament, incrementByAmount, incrementIfOddAsync } from "@/lib/redux";
+
+import { useDispatch } from "@/lib/redux/store";
 import styles from "./counter.module.css";
 
 export const Counter = () => {
   const count = useSelector(selectCount);
+  const dispatch = useDispatch();
 
   // Create a state named incrementAmount
-
+  const ammount = useRef<HTMLInputElement>(null)
   return (
     <div>
       <div className={styles.row}>
@@ -19,6 +22,7 @@ export const Counter = () => {
           className={styles.button}
           aria-label="Decrement value"
           onClick={() => {
+            dispatch(decreament())
             // dispatch event to decrease count by 1
           }}
         >
@@ -29,6 +33,7 @@ export const Counter = () => {
           className={styles.button}
           aria-label="Increment value"
           onClick={() => {
+            dispatch(increment())
             // dispatch event to increment count by 1
           }}
         >
@@ -36,10 +41,11 @@ export const Counter = () => {
         </button>
       </div>
       <div className={styles.row}>
-        <input className={styles.textbox} aria-label="Set increment amount" />
+        <input className={styles.textbox} type="number" aria-label="Set increment amount" ref={ammount} />
         <button
           className={styles.button}
           onClick={() => {
+            dispatch(incrementByAmount(Number(ammount.current?.value)))
             // dispatch event to add incrementAmount to count
           }}
         >
@@ -48,6 +54,7 @@ export const Counter = () => {
         <button
           className={styles.button}
           onClick={() => {
+            dispatch(incrementIfOddAsync(Number(ammount.current?.value)))
             // dispatch event to add incrementAmount only if count is odd
           }}
         >
