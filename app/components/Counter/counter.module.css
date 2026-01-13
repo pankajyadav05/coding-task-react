@@ -54,6 +54,10 @@
   background-color: rgba(112, 76, 182, 0.2);
 }
 
+.button:disabled {
+  opacity: 0.5;
+}
+
 .asyncButton {
   composes: button;
   position: relative;
